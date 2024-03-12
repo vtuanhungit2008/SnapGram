@@ -15,14 +15,22 @@ import {
 import { Input } from '@/components/ui/input'
 import { SignUpValidation } from '@/lib/validate'
 import {z} from "zod"
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
-import { useCreateUserAccountMutation } from '@/lib/react-query/queryAndMutaion'
+import { useCreateUserAccountMutation, useSignInUserAccountMutation } from '@/lib/react-query/queryAndMutaion'
+import { useUserContext } from '@/context/AuthContext'
 
 const SignupForm = () => {
 
 
-  const {mutateAsync:createUserAccount,isLoading:isCheckedCreateAccount} = useCreateUserAccountMutation();
+  const {mutateAsync:createUserAccount,isPending:isCheckedCreateAccount} = useCreateUserAccountMutation();
+
+  const {mutateAsync:signInUserAccount,isPending:isSignInChecked} = useSignInUserAccountMutation();
+  
+  const {checkAuthUser,isLoading:isUserLoading }=useUserContext();
+
+  const navigate = useNavigate();
+
   const form = useForm<z.infer<typeof SignUpValidation>>({
     resolver: zodResolver(SignUpValidation),
     defaultValues: {
@@ -37,9 +45,18 @@ const SignupForm = () => {
   async function onSubmit(values: z.infer<typeof SignUpValidation>) {
     // Do something with the form values.
     const newUser = await createUserAccount(values)
-    // ✅ This will be type-safe and validated.
-   
+    
     console.log(newUser)
+    // ✅ This will be type-safe and validated.
+    const session = await signInUserAccount({email:values.email,password:values.password})
+
+    console.log(session)
+
+    const isLoggedIn = await checkAuthUser();
+    if(isLoggedIn){
+      form.reset();
+      navigate("/");
+    }
   }
   return (
     <Form {...form}>
