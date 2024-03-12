@@ -13,8 +13,6 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <AuthProvider>
         <App/>
         </AuthProvider>
-       
-      
       </QueryProvider>
     </BrowserRouter>
   </React.StrictMode>

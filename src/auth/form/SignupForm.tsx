@@ -44,19 +44,23 @@ const SignupForm = () => {
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof SignUpValidation>) {
     // Do something with the form values.
+    
+   
     const newUser = await createUserAccount(values)
     
-    console.log(newUser)
+   
     // ✅ This will be type-safe and validated.
     const session = await signInUserAccount({email:values.email,password:values.password})
-
-    console.log(session)
+    
+   
 
     const isLoggedIn = await checkAuthUser();
+
     if(isLoggedIn){
       form.reset();
       navigate("/");
     }
+
   }
   return (
     <Form {...form}>

@@ -11,6 +11,7 @@ import { getCurrentUser } from "@/lib/appwrite/api";
   email: "",
   imageUrl: "",
   bio: "",
+  password:"",
 };
 
 const INITIAL_STATE = {
@@ -36,21 +37,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setIsLoading(true);
     try {
       const currentAccount = await getCurrentUser();
-      if (currentAccount) {
-        setUser({
+      if(!currentAccount){
+        window.alert('fal');
+        return false;
+      }
+      setUser({
           id: currentAccount.$id,
           name: currentAccount.name,
           username: currentAccount.username,
           email: currentAccount.email,
           imageUrl: currentAccount.imageUrl,
           bio: currentAccount.bio,
+          password:currentAccount.password,
         });
         setIsAuthenticated(true);
-
         return true;
-      }
-
-      return false;
     } catch (error) {
       console.error(error);
       return false;

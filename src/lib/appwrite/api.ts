@@ -6,22 +6,34 @@ import {  ID, Query } from "appwrite";
 export async function createUserAccount(user:INewUser){
 
     try {
+        console.log("password",user.password);//van lay dc tu form
+
         const newAccount = await account.create(
           ID.unique(),
+          
           user.email,
-          user.password,
-          user.name
+        user.password,
+          user.name,
         )
+        console.log("password",newAccount.password);
+
+        //phan nay chua lay dc password tu form
+
+        console.log("hi",newAccount);
 
         if(!newAccount) throw Error;
         const avatarUrl = avatar.getInitials(user.name);
+        const password = user.password; // fix password kh co tren auth
         const newUser = await saveUserToDB({
             accountId :newAccount.$id,
+            password:password,
             email:newAccount.email,
             name:newAccount.name,
             username:newAccount.name,
             imageUrl:avatarUrl,
+        
         });
+     
         return newUser;
         
     } catch (error) {
@@ -35,6 +47,8 @@ export async function saveUserToDB(user:{
     name:string,
     imageUrl:URL,
     username:string,
+    password : string,
+
 
 }){
     try {
@@ -45,7 +59,9 @@ export async function saveUserToDB(user:{
             user,
 
         );
+ 
         return newUser;
+        
     } catch (error) {
         console.log(error);
     }
@@ -69,8 +85,10 @@ try {
         appwriteConfig.userCollectionId,
         [Query.equal('accountId',currentAccount.$id)]
     )
+    if (!currentUser) throw Error;
     return currentUser.documents[0];
 } catch (error) {
     console.log(error);
+    return null;
 }
 }
