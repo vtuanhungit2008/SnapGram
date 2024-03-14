@@ -19,6 +19,7 @@ import { Link, useNavigate } from 'react-router-dom'
 
 import { useCreateUserAccountMutation, useSignInUserAccountMutation } from '@/lib/react-query/queryAndMutaion'
 import { useUserContext } from '@/context/AuthContext'
+import { getListUser } from '@/lib/appwrite/api'
 
 const SignupForm = () => {
 
@@ -48,7 +49,8 @@ const SignupForm = () => {
    
     const newUser = await createUserAccount(values)
     
-   
+    const listUser = await getListUser();
+    console.log(listUser);
     // ✅ This will be type-safe and validated.
     const session = await signInUserAccount({email:values.email,password:values.password})
     

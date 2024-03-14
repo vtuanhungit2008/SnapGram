@@ -1,9 +1,10 @@
+import { deleteAllUser, getAllData } from '@/lib/appwrite/api'
 import React from 'react'
 
 const RootLayout = () => {
   return (
     <div>
-        Roots
+        <button onClick={deleteAllUser}>Click</button>
     </div>
   )
 }

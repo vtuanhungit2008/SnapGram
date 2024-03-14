@@ -3,7 +3,65 @@ import { account, appwriteConfig, avatar, databases } from "./config";
 import {  ID, Query } from "appwrite";
 import { Navigate } from "react-router-dom";
 
+export async function updatePassword() {
+    try {
+        const newPassword = account.updatePassword("00000000");
+        return newPassword;
+    } catch (error) {
+        console.log(error);
+    }
+}
+export async function deleteAllUser() {
+    const promise = databases.deleteDocument('65e809ce25c1e3e37094', '65e80c67706e34d62e1e','65f33f3af3cb9f6700a5');
 
+promise.then(function (response) {
+    console.log(response); // Success
+}, function (error) {
+    console.log(error); // Failure
+});
+    
+}
+export async function getUserById() {
+    const promise = databases.getDocument('65e809ce25c1e3e37094','65e80c67706e34d62e1e','65f33f3af3cb9f6700a5');
+    
+
+    promise.then(function (response) {
+        console.log(response); // Success
+    }, function (error) {
+        console.log(error); // Failure
+    });
+}
+export async function getAllData() {
+    const promise = databases.listDocuments('65e809ce25c1e3e37094','65e80c67706e34d62e1e');
+    
+
+    promise.then(function (response) {
+        
+        console.log(response.documents); // Success
+    }, function (error) {
+        console.log(error); // Failure
+    });
+}
+export async function updateEmail(user:INewUser) {
+    const promise = account.updateEmail(user.email, '00000000');
+
+    promise.then(function (response) {
+    console.log(response); // Success
+}, function (error) {
+    console.log(error); // Failure
+});
+}
+export async function getListUser() {
+
+    
+    try {
+        const promise = account.listIdentities();
+        return promise;
+    } catch (error) {
+        console.log(error);
+    }
+
+}
 export async function createUserAccount(user:INewUser){
 
     try {
@@ -16,6 +74,7 @@ export async function createUserAccount(user:INewUser){
         user.password,
           user.name,
         )
+       
         console.log("password",newAccount.password);
 
         //phan nay chua lay dc password tu form
@@ -34,6 +93,7 @@ export async function createUserAccount(user:INewUser){
             imageUrl:avatarUrl,
         
         });
+
      
         return newUser;
         
@@ -71,6 +131,7 @@ export async function saveUserToDB(user:{
 export async function signInUserAccount(user:{ email:string;password:string;}) {
     try {
         const session = await account.createEmailSession(user.email,user.password);
+        
         return session;
     } catch (error) {
         console.log(error);
@@ -81,7 +142,7 @@ export async function getCurrentUser() {
 try {
     
     const currentAccount = await account.get();
- 
+    
     if(!currentAccount) throw Error;
     const currentUser = await databases.listDocuments(
         appwriteConfig.databasesId,
