@@ -19,7 +19,7 @@ import { signInUserAccount } from "@/lib/appwrite/api";
 const SigninForm = () => {
   
   const navigate = useNavigate();
-  const { checkAuthUser, isLoading: isUserLoading } = useUserContext();
+  const { checkAuthUser, isLoading: isUserLoading  ,isAuthenticated} = useUserContext();
 
   // Query
   const { mutateAsync: signInUserAccount, isLoading } = useSignInUserAccountMutation();
@@ -37,15 +37,17 @@ const SigninForm = () => {
 
     const session = await signInUserAccount(user)
     const isLoggedIn = await checkAuthUser();
-console.log(isLoggedIn);
-    if (isLoggedIn) {
+
+    
+console.log(isAuthenticated);
+    if (isAuthenticated) {
       form.reset();
 
       navigate("/");
     }{
       return;
     }
-      
+       v
       
       
     

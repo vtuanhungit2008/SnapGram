@@ -54,6 +54,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         return true;
     } catch (error) {
       console.error(error);
+      setIsAuthenticated(false)
       return false;
     } finally {
       setIsLoading(false);

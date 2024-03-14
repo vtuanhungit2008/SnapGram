@@ -27,7 +27,7 @@ const SignupForm = () => {
 
   const {mutateAsync:signInUserAccount,isPending:isSignInChecked} = useSignInUserAccountMutation();
   
-  const {checkAuthUser,isLoading:isUserLoading }=useUserContext();
+  const {checkAuthUser,isAuthenticated }=useUserContext();
 
   const navigate = useNavigate();
 
@@ -54,12 +54,15 @@ const SignupForm = () => {
     
    
 
-    const isLoggedIn = await checkAuthUser();
-
-    if(isLoggedIn){
+    
+console.log(isAuthenticated);
+    if(isAuthenticated){
       form.reset();
       navigate("/");
     }
+    form.reset();
+    navigate("/sign-in");
+
 
   }
   return (

@@ -1,6 +1,7 @@
 import { INewUser } from "@/types";
 import { account, appwriteConfig, avatar, databases } from "./config";
 import {  ID, Query } from "appwrite";
+import { Navigate } from "react-router-dom";
 
 
 export async function createUserAccount(user:INewUser){
@@ -78,7 +79,9 @@ export async function signInUserAccount(user:{ email:string;password:string;}) {
 export async function getCurrentUser() {
 
 try {
+    
     const currentAccount = await account.get();
+ 
     if(!currentAccount) throw Error;
     const currentUser = await databases.listDocuments(
         appwriteConfig.databasesId,
@@ -86,8 +89,10 @@ try {
         [Query.equal('accountId',currentAccount.$id)]
     )
     if (!currentUser) throw Error;
+    console.log(currentUser);
     return currentUser.documents[0];
 } catch (error) {
+  
     console.log(error);
     return null;
 }
