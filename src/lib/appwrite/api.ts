@@ -150,7 +150,7 @@ try {
         [Query.equal('accountId',currentAccount.$id)]
     )
     if (!currentUser) throw Error;
-    console.log(currentUser);
+   
     return currentUser.documents[0];
 } catch (error) {
   
@@ -158,3 +158,12 @@ try {
     return null;
 }
 }
+export async function signOutAccount() {
+    try {
+      const session = await account.deleteSession("current");
+  
+      return session;
+    } catch (error) {
+      console.log(error);
+    }
+  }

@@ -26,7 +26,7 @@ const SignupForm = () => {
 
   const {mutateAsync:createUserAccount,isPending:isCheckedCreateAccount} = useCreateUserAccountMutation();
 
-  const {mutateAsync:signInUserAccount,isPending:isSignInChecked} = useSignInUserAccountMutation();
+  
   
   const {checkAuthUser,isAuthenticated }=useUserContext();
 
@@ -44,26 +44,17 @@ const SignupForm = () => {
  
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof SignUpValidation>) {
-    // Do something with the form values.
-    
-   
     const newUser = await createUserAccount(values)
-    
-    const listUser = await getListUser();
-    console.log(listUser);
-    // ✅ This will be type-safe and validated.
-    const session = await signInUserAccount({email:values.email,password:values.password})
-    
-   
-
-    
-console.log(isAuthenticated);
+    console.log(newUser);
     if(isAuthenticated){
       form.reset();
       navigate("/");
     }
-    form.reset();
-    navigate("/sign-in");
+    else{
+      form.reset();
+      navigate("/sign-in");
+    }
+    
 
 
   }

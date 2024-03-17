@@ -22,7 +22,7 @@ const SigninForm = () => {
   const { checkAuthUser, isLoading: isUserLoading  ,isAuthenticated} = useUserContext();
 
   // Query
-  const { mutateAsync: signInUserAccount, isLoading } = useSignInUserAccountMutation();
+  const { mutateAsync: signInUserAccount1, isLoading } = useSignInUserAccountMutation();
 
   const form = useForm<z.infer<typeof SignInValidation>>({
     resolver: zodResolver(SignInValidation),
@@ -35,19 +35,18 @@ const SigninForm = () => {
   const handleSignin = async (user: z.infer<typeof SignInValidation>) => {
     
 
-    const session = await signInUserAccount(user)
-    const isLoggedIn = await checkAuthUser();
-
-    
-console.log(isAuthenticated);
+    const session = await signInUserAccount1(user)
+    const isLoggedIn = await checkAuthUser();  
+  
     if (isAuthenticated) {
       form.reset();
-
       navigate("/");
-    }{
-      return;
     }
-       v
+    else{
+      form.reset();
+      navigate("/sign-in")
+    }
+       
       
       
     

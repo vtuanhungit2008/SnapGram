@@ -4,7 +4,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { IContextType, IUser } from "@/types";
 import { getCurrentUser } from "@/lib/appwrite/api";
 
- const INITIAL_USER = {
+ export const INITIAL_USER = {
   id: "",
   name: "",
   username: "",
@@ -50,8 +50,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           bio: currentAccount.bio,
           password:currentAccount.password,
         });
-        setIsAuthenticated(true);
-        return true;
+      setIsAuthenticated(true);
+      return true;
     } catch (error) {
       console.error(error);
       setIsAuthenticated(false)
