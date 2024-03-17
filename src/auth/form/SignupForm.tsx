@@ -17,21 +17,11 @@ import { SignUpValidation } from '@/lib/validate'
 import {z} from "zod"
 import { Link, useNavigate } from 'react-router-dom'
 
-import { useCreateUserAccountMutation, useSignInUserAccountMutation } from '@/lib/react-query/queryAndMutaion'
-import { useUserContext } from '@/context/AuthContext'
-import { getListUser } from '@/lib/appwrite/api'
+import { useCreateUserAccountMutation } from '@/lib/react-query/queryAndMutaion'
 
 const SignupForm = () => {
-
-
   const {mutateAsync:createUserAccount,isPending:isCheckedCreateAccount} = useCreateUserAccountMutation();
-
-  
-  
-  const {checkAuthUser,isAuthenticated }=useUserContext();
-
   const navigate = useNavigate();
-
   const form = useForm<z.infer<typeof SignUpValidation>>({
     resolver: zodResolver(SignUpValidation),
     defaultValues: {
@@ -41,22 +31,10 @@ const SignupForm = () => {
       email:"",
     },
   })
- 
-  // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof SignUpValidation>) {
-    const newUser = await createUserAccount(values)
-    console.log(newUser);
-    if(isAuthenticated){
-      form.reset();
-      navigate("/");
-    }
-    else{
+      await createUserAccount(values)
       form.reset();
       navigate("/sign-in");
-    }
-    
-
-
   }
   return (
     <Form {...form}>

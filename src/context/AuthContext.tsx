@@ -38,7 +38,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       const currentAccount = await getCurrentUser();
       if(!currentAccount){
-        window.alert('fal');
         return false;
       }
       setUser({
@@ -82,6 +81,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setIsAuthenticated,
     checkAuthUser,
   };
+
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 
 import { useUserContext, INITIAL_USER } from "@/context/AuthContext";
 import { useSignOutAccount } from "@/lib/react-query/queryAndMutaion";
+import { useEffect } from "react";
 
 const LeftSidebar = () => {
   const navigate = useNavigate();
@@ -25,7 +26,13 @@ const LeftSidebar = () => {
     setUser(INITIAL_USER);
     navigate("/sign-in");
   };
-  ///luu y
+
+  // const { mutate: signOut, isSuccess } = useSignOutAccount();
+  
+  // useEffect(() => {
+  //   if (isSuccess) navigate(0);
+  // }, [isSuccess]);
+  // ///luu y
   
 
   return (
@@ -89,7 +96,7 @@ const LeftSidebar = () => {
       <Button
         variant="ghost"
         className="shad-button_ghost"
-        onClick={(e) => handleSignOut(e)}>
+        onClick={(e)=>handleSignOut(e)}>
         <img src="/assets/icons/logout.svg" alt="logout" />
         <p className="small-medium lg:base-medium">Logout</p>
       </Button>

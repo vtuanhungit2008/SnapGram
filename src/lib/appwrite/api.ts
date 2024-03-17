@@ -1,7 +1,7 @@
 import { INewUser } from "@/types";
 import { account, appwriteConfig, avatar, databases } from "./config";
 import {  ID, Query } from "appwrite";
-import { Navigate } from "react-router-dom";
+import { Navigate, redirect, useNavigate } from "react-router-dom";
 
 export async function updatePassword() {
     try {
@@ -138,12 +138,12 @@ export async function signInUserAccount(user:{ email:string;password:string;}) {
     }
 }
 export async function getCurrentUser() {
-
+   
 try {
     
     const currentAccount = await account.get();
     
-    if(!currentAccount) throw Error;
+    if(!currentAccount)  throw Error;
     const currentUser = await databases.listDocuments(
         appwriteConfig.databasesId,
         appwriteConfig.userCollectionId,

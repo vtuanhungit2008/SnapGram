@@ -2,28 +2,22 @@ import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link, useNavigate } from "react-router-dom";
-
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-
-
-
-
 import { useUserContext } from "@/context/AuthContext";
 import { useSignInUserAccountMutation } from "@/lib/react-query/queryAndMutaion";
 import { SignInValidation } from "@/lib/validate";
-import { getListUser, signInUserAccount } from "@/lib/appwrite/api";
+import { signOutAccount } from "@/lib/appwrite/api";
+import { account } from "@/lib/appwrite/config";
+
 
 
 const SigninForm = () => {
-  
   const navigate = useNavigate();
-  const { checkAuthUser, isLoading: isUserLoading  ,isAuthenticated} = useUserContext();
-
+  const { checkAuthUser, isLoading: isUserLoading } = useUserContext();
   // Query
-  const { mutateAsync: signInUserAccount1, isLoading } = useSignInUserAccountMutation();
-
+  const { mutateAsync: signInUserAccount1, isPending :isLoading } = useSignInUserAccountMutation();
   const form = useForm<z.infer<typeof SignInValidation>>({
     resolver: zodResolver(SignInValidation),
     defaultValues: {
@@ -33,22 +27,22 @@ const SigninForm = () => {
   });
 
   const handleSignin = async (user: z.infer<typeof SignInValidation>) => {
-    
-
-    const session = await signInUserAccount1(user)
+    await signInUserAccount1(user)
     const isLoggedIn = await checkAuthUser();  
-  
-    if (isAuthenticated) {
+ 
+    if (isLoggedIn) {
       form.reset();
       navigate("/");
+      account.deleteSession("current");//xoa lich su dang nhap
     }
     else{
       form.reset();
+      window.alert("Wrong password or email !")
       navigate("/sign-in")
     }
        
       
-      
+    
     
   };
 
