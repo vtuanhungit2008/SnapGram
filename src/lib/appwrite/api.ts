@@ -193,6 +193,7 @@ export async function signOutAccount() {
                 tags: tags,
             }
         )
+    
         if(!newPost) throw Error;
 
         return newPost;
@@ -215,7 +216,7 @@ export async function signOutAccount() {
       console.log(error);
     }
   }
-  export function getFilePreview(fileId: string) {
+  export  function getFilePreview(fileId: string) {
     try {
       const fileUrl = storage.getFilePreview(
         appwriteConfig.storageId,
@@ -234,4 +235,19 @@ export async function signOutAccount() {
     }
   }
   
+export async function getRecentPosts(){
+    try {
+        const posts = await databases.listDocuments(
+          appwriteConfig.databasesId,
+          appwriteConfig.postCollectionId,
+          [Query.orderDesc("$createdAt"), Query.limit(20)]
+        );
+    
+        if (!posts) throw Error;
+    
+        return posts;
+      } catch (error) {
+        console.log(error);
+      }
+}
 
