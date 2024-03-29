@@ -251,3 +251,18 @@ export async function getRecentPosts(){
       }
 }
 
+export async function LikedPost(postId:string,likeArr:string[]) {
+    try {
+        const upDatePost = await databases.updateDocument(
+            appwriteConfig.databasesId,
+            appwriteConfig.postCollectionId,
+            postId,
+            {
+                likes: likeArr,
+            }
+        )
+        return upDatePost;
+    } catch (error) {
+        console.log(error);
+    }
+}
