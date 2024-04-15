@@ -7,3 +7,7 @@ export function cn(...inputs: ClassValue[]) {
 export const checkIsLiked = (likeList: string[], userId: string) => {
   return likeList.includes(userId);
 };
+
+export const checkSaved = (saveList: string[], userId: string) => {
+  return saveList.includes(userId);
+};

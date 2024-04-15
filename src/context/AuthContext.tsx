@@ -12,6 +12,7 @@ import { getCurrentUser } from "@/lib/appwrite/api";
   imageUrl: "",
   bio: "",
   password:"",
+
 };
 
 const INITIAL_STATE = {
@@ -48,6 +49,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           imageUrl: currentAccount.imageUrl,
           bio: currentAccount.bio,
           password:currentAccount.password,
+          save:currentAccount.save,
         });
       setIsAuthenticated(true);
       return true;

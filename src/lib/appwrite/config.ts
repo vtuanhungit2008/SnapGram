@@ -7,7 +7,7 @@ export const appwriteConfig = {
     storageId:import.meta.env.VITE_APPWRITE_PROJECT_STORAGE,
     userCollectionId:import.meta.env.VITE_APPWRITE_PROJECT_USERS,
     postCollectionId:import.meta.env.VITE_APPWRITE_PROJECT_POSTS,
-    savesCollectionId:import.meta.env.VITE_APPWRITE_PROJECT_DATABASES,
+    savesCollectionId:import.meta.env.VITE_APPWRITE_PROJECT_SAVES,
 }
 export const client = new Client();
 client.setEndpoint(appwriteConfig.url);

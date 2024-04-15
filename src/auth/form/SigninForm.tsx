@@ -33,7 +33,7 @@ const SigninForm = () => {
     if (isLoggedIn) {
       form.reset();
       navigate("/");
-      account.deleteSession("current");//xoa lich su dang nhap
+    
     }
     else{
       form.reset();

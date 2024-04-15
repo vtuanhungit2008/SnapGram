@@ -5,10 +5,12 @@ import React from 'react'
 import { Models } from 'appwrite';
 import PostCard from '@/components/shared/PostCard';
 
+
 const Home = () => {
 
   const {data: posts,isPending:isLoadding,isError: isErrorPost} = useGetRecentPosts();
-  console.log(posts);
+console.log("data ",posts);
+
   return (
     <div className='flex flex-1'>
       <div className='home-container'>
