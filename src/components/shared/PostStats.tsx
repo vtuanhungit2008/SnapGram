@@ -17,21 +17,33 @@ type PostStatsProps = {
 
 
 const PostStats = ({post,userId}:PostStatsProps) => {
-  
+  if(!userId){
+    userId = "";
+  }
   
   const likeList = post.likes.map((user:Models.Document)=> user.$id);
-   const {data:currentUser} = useGetCurrentUser();
+
+   const {data:currentUser,isLoading:loading} = useGetCurrentUser();
+
  const [likes,setLike] = useState(likeList);
  const { mutate: likePost} = useLikePost();
  const { mutate: savePost} = useSavedPost();
  const { mutate: deletePost} = useDeleteSaved();
  const [saved,setSaved] = useState(false);
  const [cout,setCount] = useState(post.likes.length);
- const savedPostRecord = currentUser?.save.find((record:Models.Document)=> record.post.$id === post.$id);
-useEffect(()=>{
-setSaved(savedPostRecord);
-},[currentUser])
+//  const savedPostRecord = currentUser?.save.find((record:Models.Document)=> record.post.$id === post.$id);
+const savedPostRecord = currentUser?.save.find((record: Models.Document) => 
+  record.post?.$id === post?.$id
+);
 
+
+
+
+
+
+ useEffect(() => {
+   setSaved(!!savedPostRecord);
+ }, [currentUser]);
 
 
 

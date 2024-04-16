@@ -7,6 +7,10 @@ import AuthLayout from './auth/AuthLayout'
 import RootLayout from './root/RootLayout'
 import { Home } from './root/pages'
 import CreatePost from './root/pages/CreatePost'
+import EditPost from './root/pages/EditPost'
+import PostDetail from './root/pages/PostDetail'
+import Explore from './root/pages/Explore'
+
 const App =()=>{
     return(
      <main className='flex h-screen'>
@@ -18,10 +22,13 @@ const App =()=>{
             <Route  element={<RootLayout/>}>
             
              <Route index element={<Home/>}/>
-             <Route path='/explore' element={<Home/>}/>
+             
              <Route path='/all-users' element={<Home/>}/>
              <Route path='/saved' element={<Home/>}/>
              <Route path='/create-post' element={<CreatePost/>}/>
+              <Route path='/update-post/:id' element={<EditPost/>}/>
+              <Route path='/posts/:id' element={<PostDetail/>}/>
+              <Route path='/explore' element={<Explore/>}/>
              
             </Route>
 

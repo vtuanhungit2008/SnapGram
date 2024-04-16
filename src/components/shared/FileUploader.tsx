@@ -7,7 +7,7 @@ fieldChange:(FILES:File[])=> void,
 mediaUrl:string,
 }
 const FileUploader = ({fieldChange,mediaUrl}:FileUploaderDrop) => {
-    const [fileUrl, setFileUrl] = useState<string>("");
+    const [fileUrl, setFileUrl] = useState<string>(mediaUrl);
     const [file,setFile] = useState<File[]>([]);
     const onDrop = useCallback((acceptedFiles:FileWithPath[]) => {
         // Do something with the files
@@ -26,7 +26,7 @@ const FileUploader = ({fieldChange,mediaUrl}:FileUploaderDrop) => {
   return (
     <div {...getRootProps()} className="flex flex-center flex-col bg-dark-3 rounded-xl cursor-pointer">
       <input {...getInputProps()} className="cursor-pointer"  />
-        {fileUrl ? (
+        {(fileUrl)  ? (
         <>
           <div className="flex flex-1 justify-center w-full p-5 lg:p-10">
             <img src={fileUrl} alt="image" className="file_uploader-img" />
@@ -40,6 +40,7 @@ const FileUploader = ({fieldChange,mediaUrl}:FileUploaderDrop) => {
             width={96}
             height={77}
             alt="file upload"
+            
           />
 
           <h3 className="base-medium text-light-2 mb-2 mt-6">
