@@ -27,7 +27,7 @@ function PostForm({post}:any) {
 
   const { user } = useUserContext();
   // Query
-
+const navigate = useNavigate();
   const {mutateAsync : createNewPost} = useCreateNewPost();
   const formSchema = z.object({
     caption: z.string().min(2).max(50),
@@ -50,7 +50,7 @@ function PostForm({post}:any) {
       ...values,
       userId: user.id,
     });
-
+    navigate("/");
     
   }
   return (

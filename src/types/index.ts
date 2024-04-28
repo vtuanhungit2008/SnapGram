@@ -56,3 +56,23 @@ export type INavLink = {
     username: string;
     password: string;
   };
+    
+  export type INewUserSaveDB = {
+    accountId: string,
+    email:string,
+    name:string,
+    imageUrl:URL,
+    username:string,
+    password : string,
+  };
+  
+  export const INITIAL_USER = {
+    id: "",
+    name: "",
+    username: "",
+    email: "",
+    imageUrl: "",
+    bio: "",
+    password:"",
+  
+  };

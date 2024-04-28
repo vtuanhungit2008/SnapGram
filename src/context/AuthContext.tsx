@@ -49,7 +49,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           imageUrl: currentAccount.imageUrl,
           bio: currentAccount.bio,
           password:currentAccount.password,
-          save:currentAccount.save,
+         
         });
       setIsAuthenticated(true);
       return true;

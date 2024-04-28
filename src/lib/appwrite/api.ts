@@ -1,8 +1,8 @@
-import { INewPost, INewUser, IUpdatePost } from "@/types";
+import { INewPost, INewUser, INewUserSaveDB, IUpdatePost } from "@/types";
 import { account, appwriteConfig, avatar, databases, storage } from "./config";
 import {  ID, Query } from "appwrite";
-import { Navigate, redirect, useNavigate } from "react-router-dom";
-import { PostValidation } from '@/lib/validate';
+
+
 
 
 export async function deleteFile(fileId: string) {
@@ -19,20 +19,13 @@ export async function createUserAccount(user:INewUser){
     try {
         console.log("password",user.password);//van lay dc tu form
 
-        const newAccount = await account.create(
-          
+        const newAccount = await account.create(        
           ID.unique(),
-          
           user.email,
-        user.password,
+          user.password,
           user.name,
         )
-       
-        
-
         //phan nay chua lay dc password tu form
-
-
         if(!newAccount) throw Error;
         const avatarUrl = avatar.getInitials(user.name);
         const password = user.password; // fix password kh co tren auth
@@ -54,14 +47,7 @@ export async function createUserAccount(user:INewUser){
     }
 
 }
-export async function saveUserToDB(user:{
-    accountId: string,
-    email:string,
-    name:string,
-    imageUrl:URL,
-    username:string,
-    password : string,
-}){
+export async function saveUserToDB(user:INewUserSaveDB){
     try {
         const newUser = await databases.createDocument(
             appwriteConfig.databasesId,
@@ -121,8 +107,6 @@ export async function signOutAccount() {
   export async function createNewPost(post : INewPost) {
     try {
         const upLoadFile =await upLoadImg(post.file[0]);
-        // 
-     
        console.log(typeof(upLoadFile?.$id));
        
         const imgUrl = getFilePreview(upLoadFile.$id);
@@ -356,6 +340,78 @@ export async function updatePost(post: IUpdatePost) {
       await deleteFile(imageId);
   
       return { status: "Ok" };
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+
+  export async function searchPosts(searchTerm: string) {
+    try {
+      const posts = await databases.listDocuments(
+        appwriteConfig.databasesId,
+        appwriteConfig.postCollectionId,
+        [Query.search("caption", searchTerm)]
+      );
+      
+      if (!posts) throw Error;
+  
+      return posts;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  export async function getInfinitePosts({ pageParam }: { pageParam: number }) {
+    const queries: any[] = [Query.orderDesc("$updatedAt"), Query.limit(9)];
+  
+    if (pageParam) {
+      queries.push(Query.cursorAfter(pageParam.toString()));
+    }
+  
+    try {
+      const posts = await databases.listDocuments(
+        appwriteConfig.databasesId,
+        appwriteConfig.postCollectionId,
+        queries
+      );
+  
+      if (!posts) throw Error;
+  
+      return posts;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  export async function getUsers() {
+    try {
+      const users = await databases.listDocuments(
+        appwriteConfig.databasesId,
+        appwriteConfig.userCollectionId,
+      
+      );
+      console.log(users);
+      
+  
+      if (!users) throw Error;
+  
+      return users;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  export async function getUserById(userId: string) {
+    try {
+      const user = await databases.getDocument(
+        appwriteConfig.databasesId,
+        appwriteConfig.userCollectionId,
+        userId
+      );
+  
+      if (!user) throw Error;
+  
+      return user;
     } catch (error) {
       console.log(error);
     }
