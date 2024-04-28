@@ -8,8 +8,6 @@ import { Button } from "@/components/ui/button";
 import { useUserContext } from "@/context/AuthContext";
 import { useSignInUserAccountMutation } from "@/lib/react-query/queryAndMutaion";
 import { SignInValidation } from "@/lib/validate";
-import { signOutAccount } from "@/lib/appwrite/api";
-import { account } from "@/lib/appwrite/config";
 
 
 

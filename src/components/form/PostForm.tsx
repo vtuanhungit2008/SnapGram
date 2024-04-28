@@ -1,4 +1,4 @@
-import React from 'react'
+
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -16,7 +16,6 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from '../ui/textarea'
 import FileUploader from '../shared/FileUploader'
 import { PostValidation } from '@/lib/validate'
-import { createNewPost } from '@/lib/appwrite/api'
 import { useUserContext } from '@/context/AuthContext'
 import { useCreateNewPost } from '@/lib/react-query/queryAndMutaion'
 import { useNavigate } from 'react-router-dom'
@@ -29,9 +28,9 @@ function PostForm({post}:any) {
   // Query
 const navigate = useNavigate();
   const {mutateAsync : createNewPost} = useCreateNewPost();
-  const formSchema = z.object({
-    caption: z.string().min(2).max(50),
-  })
+  // const formSchema = z.object({
+  //   caption: z.string().min(2).max(50),
+  // })
   const form = useForm<z.infer<typeof PostValidation>>({
     resolver: zodResolver(PostValidation),
     defaultValues: {
@@ -50,6 +49,8 @@ const navigate = useNavigate();
       ...values,
       userId: user.id,
     });
+    console.log(newPost);
+    
     navigate("/");
     
   }

@@ -3,14 +3,13 @@ import {
     useMutation,
     useQueryClient,
   
-    QueryClient,
-    queryOptions,
+   
     useInfiniteQuery,
 } from "@tanstack/react-query"
 import { DeleteSaved, LikedPost, SavedPost, createNewPost, createUserAccount, deletePost, getCurrentUser, getInfinitePosts, getRecentPosts,  getUserById,  getUsers,  handlePostById,  searchPosts,  signInUserAccount, signOutAccount, updatePost } from "../appwrite/api"
 import { INewUser, IUpdatePost } from "@/types"
 import { QUERY_KEYS } from "./queryKey"
-import { string } from "zod"
+
 
 export const useCreateUserAccountMutation = ()=>{
     return useMutation({
@@ -96,7 +95,8 @@ export const useGetRecentPosts = () => {
           queryKey:[QUERY_KEYS.GET_POSTS,]
         })
         queryClient.invalidateQueries({
-          queryKey:[QUERY_KEYS.GET_CURRENT_USER,data?.$id]
+          queryKey: [QUERY_KEYS.GET_CURRENT_USER, data && data.$id ? data.$id : '']
+
         })
       }
     });
@@ -150,7 +150,7 @@ export const useGetRecentPosts = () => {
           if (lastPage && lastPage.documents.length === 0) {
             return null;
           }
-          const lastId = lastPage.documents[lastPage.documents.length - 1].$id;
+          const lastId = lastPage?.documents[lastPage.documents.length - 1].$id;
           return lastId;
         }
       });

@@ -3,14 +3,15 @@ import SeacrhResults from '@/components/shared/SeacrhResults';
 import { Input } from '@/components/ui/input';
 import useDebounce from '@/hook/useDebounce';
 import { useGetPosts, useSearchPosts } from '@/lib/react-query/queryAndMutaion';
-import { Loader } from 'lucide-react';
-import React, { useEffect, useState } from 'react'
+import { useState } from 'react';
+
 
 
 const Explore = () => {
   
     const { data: posts, fetchNextPage, hasNextPage } = useGetPosts();
 
+console.log(fetchNextPage,hasNextPage);
 
   const [searchValue, setSearchValue] = useState("");
 

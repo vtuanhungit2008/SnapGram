@@ -12,7 +12,7 @@ import PostDetail from './root/pages/PostDetail'
 import Explore from './root/pages/Explore'
 import AllUsers from './root/pages/AllUser'
 import Profile from './root/pages/Profile'
-import { Save } from 'lucide-react'
+
 import Saved from './root/pages/Saved'
 
 const App =()=>{

@@ -1,7 +1,7 @@
 
-import { LikedPost, getRecentPosts } from "@/lib/appwrite/api";
+
 import { Models } from "appwrite"
-import React, { useContext, useEffect, useState } from "react";
+import React, {  useEffect, useState } from "react";
 
 import { checkIsLiked } from '@/lib/utils';
 import { useDeleteSaved,  useGetCurrentUser,  useLikePost, useSavedPost } from "@/lib/react-query/queryAndMutaion";

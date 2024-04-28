@@ -107,10 +107,13 @@ export async function signOutAccount() {
   export async function createNewPost(post : INewPost) {
     try {
         const upLoadFile =await upLoadImg(post.file[0]);
-       console.log(typeof(upLoadFile?.$id));
-       
+      
+       if (!upLoadFile) throw Error;
         const imgUrl = getFilePreview(upLoadFile.$id);
-       
+        if (!imgUrl) {
+          await deleteFile(upLoadFile.$id);
+          throw Error;
+        }
         const tags = post.tags?.replace(/ /g, "").split(",") || [];
         const newPost = await databases.createDocument(
             appwriteConfig.databasesId,
@@ -225,7 +228,9 @@ export async function DeleteSaved(savedId:string) {
             appwriteConfig.savesCollectionId,
            savedId,
         )
-        return {status:'ok'};
+      
+        
+        return savePost;
     } catch (error) {
         console.log(error);
     }
