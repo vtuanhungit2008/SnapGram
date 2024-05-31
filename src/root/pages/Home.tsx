@@ -2,7 +2,7 @@
 import { useGetRecentPosts } from '@/lib/react-query/queryAndMutaion';
 
 
-import { Models } from 'appwrite';
+
 import PostCard from '@/components/shared/PostCard';
 import Loader from '@/components/shared/Loader';
 
