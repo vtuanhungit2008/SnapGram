@@ -1,13 +1,13 @@
 import Loader from '@/components/shared/Loader';
 
 import { useDeletePost, useGetPostById } from '@/lib/react-query/queryAndMutaion';
-import React from 'react'
+
 import { Link, useNavigate, useParams } from 'react-router-dom'
 
 import { Button } from '@/components/ui/button';
 import { useUserContext } from '@/context/AuthContext';
 import PostStats from '@/components/shared/PostStats';
-import { deletePost } from '@/lib/appwrite/api';
+
 
 const PostDetail = () => {
   const {id} = useParams();
@@ -85,7 +85,7 @@ const PostDetail = () => {
               </Link>
 
               <div className="flex-center gap-4">
-                <Link
+                {/* <Link
                   to={`/update-post/${post?.$id}`}
                    className={`${user.id !== post?.creator.$id && "hidden"}`}>
                   <img
@@ -94,7 +94,7 @@ const PostDetail = () => {
                     width={24}
                     height={24}
                   />
-                </Link>
+                </Link> */}
 
                  <Button
                   onClick={handleDeletePost}

@@ -19,12 +19,15 @@ import { PostValidation } from '@/lib/validate'
 import { useUserContext } from '@/context/AuthContext'
 import { useCreateNewPost } from '@/lib/react-query/queryAndMutaion'
 import { useNavigate } from 'react-router-dom'
+import { useState } from "react"
+import Loader from "../shared/Loader"
 
 
 
 function PostForm({post}:any) {
 
   const { user } = useUserContext();
+  const [loading,setloading] = useState(false);
   // Query
 const navigate = useNavigate();
   const {mutateAsync : createNewPost} = useCreateNewPost();
@@ -44,6 +47,7 @@ const navigate = useNavigate();
   async function onSubmit(values: z.infer<typeof PostValidation>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
+    setloading(true)
     console.log(user.id);
     const newPost = await createNewPost({
       ...values,
@@ -51,6 +55,7 @@ const navigate = useNavigate();
     });
     console.log(newPost);
     
+    setloading(false)
     navigate("/");
     
   }
@@ -145,7 +150,9 @@ const navigate = useNavigate();
         <Button
           type="submit"
           className="shad-button_primary whitespace-nowrap"
-        > Post
+
+        > {loading ? <Loader/> : "POST"}
+
         </Button>
       </div>
     </form>

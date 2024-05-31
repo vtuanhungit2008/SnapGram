@@ -3,6 +3,7 @@
 import GridPost from './GridPost';
 import Loader from './Loader';
 
+
 export type SearchResultProps = {
   isSearchFetching: boolean;
   searchedPosts: any;

@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 
 import { useUserContext, INITIAL_USER } from "@/context/AuthContext";
 import { useSignOutAccount } from "@/lib/react-query/queryAndMutaion";
-import { useEffect } from "react";
+
 
 const LeftSidebar = () => {
   const navigate = useNavigate();

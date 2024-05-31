@@ -22,8 +22,10 @@ const PostStats = ({post,userId}:PostStatsProps) => {
   }
   
   const likeList = post.likes.map((user:Models.Document)=> user.$id);
+console.log("like",likeList);
 
    const {data:currentUser,isLoading:loading} = useGetCurrentUser();
+
 
  const [likes,setLike] = useState(likeList);
  const { mutate: likePost} = useLikePost();

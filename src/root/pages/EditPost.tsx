@@ -1,14 +1,17 @@
-import { useParams } from "react-router-dom";
 
 
 import { useGetPostById } from "@/lib/react-query/queryAndMutaion";
-import Loader from "@/components/shared/Loader";
-import PostForm from "@/components/form/PostForm";
+import { Loader } from "lucide-react";
+import { useParams } from "react-router-dom";
+
 
 
 const EditPost = () => {
   const { id } = useParams();
   const { data: post, isLoading } = useGetPostById(id);
+  
+  
+
 ///isLoading nhằm để đợi hàm call api nếu kh có hàm này thì sẽ lỗi undefine
   if (isLoading)
     return (
@@ -16,22 +19,20 @@ const EditPost = () => {
         <Loader />
       </div>
     );
-
   return (
     <div className="flex flex-1">
       <div className="common-container">
-        <div className="flex-start gap-3 justify-start w-full max-w-5xl">
+        <div className="max-w-5xl flex-start gap-3 justify-start w-full">
           <img
-            src="/assets/icons/edit.svg"
+            src="/assets/icons/add-post.svg"
             width={36}
             height={36}
-            alt="edit"
-            className="invert-white"
+            alt="add"
           />
           <h2 className="h3-bold md:h2-bold text-left w-full">Edit Post</h2>
         </div>
 
-        {isLoading ? <Loader /> : <PostForm action="Update" post={post} />}
+     
       </div>
     </div>
   );

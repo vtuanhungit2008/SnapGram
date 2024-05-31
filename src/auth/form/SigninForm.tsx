@@ -26,6 +26,7 @@ const SigninForm = () => {
 
   const handleSignin = async (user: z.infer<typeof SignInValidation>) => {
     await signInUserAccount1(user)
+    
     const isLoggedIn = await checkAuthUser();  
  
     if (isLoggedIn) {

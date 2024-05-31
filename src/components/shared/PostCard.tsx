@@ -36,9 +36,7 @@ const PostCard = ({ post }: PostCardProps) => {
             {post.creator.name}
           </p>
           <div className="flex-center gap-2 text-light-3">
-            <p className="subtle-semibold lg:small-regular ">
-              {post.$createdAt}
-            </p>
+         
             •
             <p className="subtle-semibold lg:small-regular">
               {post.location}
@@ -47,7 +45,7 @@ const PostCard = ({ post }: PostCardProps) => {
         </div>
       </div>
 
-      <Link
+      {/* <Link
         to={`/update-post/${post.$id}`}
         className={`${user.id !== post.creator.$id && "hidden"}`}>
         <img
@@ -56,7 +54,7 @@ const PostCard = ({ post }: PostCardProps) => {
           width={20}
           height={20}
         />
-      </Link>
+      </Link> */}
     </div>
 
     <Link to={`/posts/${post.$id}`}>

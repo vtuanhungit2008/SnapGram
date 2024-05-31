@@ -25,7 +25,7 @@ export async function createUserAccount(user:INewUser){
           user.password,
           user.name,
         )
-        //phan nay chua lay dc password tu form
+    
         if(!newAccount) throw Error;
         const avatarUrl = avatar.getInitials(user.name);
         const password = user.password; // fix password kh co tren auth
@@ -106,6 +106,8 @@ export async function signOutAccount() {
   }
   export async function createNewPost(post : INewPost) {
     try {
+      console.log(post);
+      
         const upLoadFile =await upLoadImg(post.file[0]);
       
        if (!upLoadFile) throw Error;
